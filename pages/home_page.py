@@ -1,3 +1,4 @@
+from pages.auth_page import AuthPage
 from pages.base_page import BasePage
 from utils.config import BASE_URL
 
@@ -16,3 +17,10 @@ class HomePage(BasePage):
         current = self.page.url.rstrip("/")
         expected = BASE_URL.rstrip("/")
         return current == expected
+
+    def signup_login_link(self):
+        return self.page.get_by_role("link", name="Signup / Login")
+
+    def go_to_auth(self):
+        self.signup_login_link().click()
+        return AuthPage(self.page)

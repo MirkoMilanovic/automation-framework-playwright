@@ -11,4 +11,4 @@ class AccountCreatedPage(BasePage):
     def wait_until_loaded(self):
         self.page.wait_for_url("**/account_created")
         self.continue_button().wait_for(state="visible")
-        self.title().wait_for(state="visible")
+        return self
