@@ -25,5 +25,8 @@ class ProductsPage(BasePage):
         price = product.locator("div.productinfo h2").inner_text()
         return {"name": name, "price": price}
 
+    def get_product_names(self):
+        return self.page.locator("div.productinfo p").all_inner_texts()
+
     def add_to_cart_button(self, product):
         return product.locator("a.add-to-cart[data-product-id]").first

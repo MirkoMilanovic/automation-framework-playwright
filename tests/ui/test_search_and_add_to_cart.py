@@ -18,6 +18,13 @@ def test_search_and_add_to_cart(page):
         .search_product(search_item)
     )
 
+    product_names = products_page.get_product_names()
+
+    assert len(product_names) > 0, "Search returned no results"
+
+    for name in product_names:
+        assert search_item.lower() in name.lower(), f"Search result '{name}' does not match query '{search_item}'"
+
     first_product = products_page.get_first_product()
 
     add_button = products_page.add_to_cart_button(first_product)
