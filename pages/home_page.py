@@ -1,5 +1,7 @@
 from pages.auth_page import AuthPage
 from pages.base_page import BasePage
+from pages.cart_page import CartPage
+from pages.products_page import ProductsPage
 from utils.config import BASE_URL
 
 
@@ -21,6 +23,20 @@ class HomePage(BasePage):
     def signup_login_link(self):
         return self.page.get_by_role("link", name="Signup / Login")
 
+    def cart_link(self):
+        return self.page.get_by_role("link", name="Cart")
+
+    def products_link(self):
+        return self.page.get_by_role("link", name="Products")
+
     def go_to_auth(self):
         self.signup_login_link().click()
         return AuthPage(self.page)
+
+    def go_to_products(self):
+        self.products_link().first.click()
+        return ProductsPage(self.page)
+
+    def go_to_cart(self):
+        self.cart_link().click()
+        return CartPage(self.page)
