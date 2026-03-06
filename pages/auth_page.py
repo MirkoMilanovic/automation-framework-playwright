@@ -1,9 +1,11 @@
-from typing import Dict, Self
+from typing import TYPE_CHECKING, Dict, Self
+
+if TYPE_CHECKING:
+    from pages.home_page import HomePage
 
 from playwright.sync_api import Locator
 
 from pages.base_page import BasePage
-from pages.home_page import HomePage
 from pages.signup_page import SignupPage
 from utils.config import BASE_URL
 
@@ -57,7 +59,7 @@ class AuthPage(BasePage):
         self.signup_button().click()
         return SignupPage(self.page)
 
-    def go_to_login(self) -> HomePage:
+    def go_to_login(self) -> "HomePage":
         """Submit login form and return the home page."""
         from pages.home_page import HomePage
 
