@@ -15,6 +15,7 @@ def test_search_and_add_to_cart(page):
         .open()
         .wait_until_loaded()
         .go_to_products()
+        .wait_until_loaded()
         .search_product(search_item)
     )
 
@@ -31,6 +32,9 @@ def test_search_and_add_to_cart(page):
     expect(add_button).to_be_visible()
     expect(add_button).to_be_enabled()
     add_button.click()
+
+    expect(products_page.cart_modal()).to_be_visible(timeout=15000)
+    expect(products_page.cart_modal_title()).to_be_visible()
 
     product_details = products_page.get_product_details(first_product)
 

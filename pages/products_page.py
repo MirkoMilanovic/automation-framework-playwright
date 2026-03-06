@@ -9,9 +9,17 @@ class ProductsPage(BasePage):
     def search_button(self):
         return self.page.locator("#submit_search")
 
-    def search_product(self, product):
+    def wait_until_loaded(self):
+        self.page.wait_for_url("**/products*")
+        self.search_bar().wait_for(state="visible")
+        self.search_button().wait_for(state="visible")
+        return self
+
+    def search_product(self, product: str):
         self.search_bar().fill(product)
         self.search_button().click()
+        self.page.wait_for_url("**/products?search=*")
+        self.product_results().first.wait_for(state="visible")
         return self
 
     def product_results(self):
@@ -29,4 +37,10 @@ class ProductsPage(BasePage):
         return self.page.locator("div.productinfo p").all_inner_texts()
 
     def add_to_cart_button(self, product):
-        return product.locator("a.add-to-cart[data-product-id]").first
+        return product.locator("div.productinfo a.add-to-cart[data-product-id]").first
+
+    def cart_modal(self):
+        return self.page.locator("#cartModal.show")
+
+    def cart_modal_title(self):
+        return self.cart_modal().locator("h4.modal-title", has_text="Added!")
