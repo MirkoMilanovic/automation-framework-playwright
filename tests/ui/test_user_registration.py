@@ -8,7 +8,8 @@ from utils.test_data import create_dummy_user
 
 @pytest.mark.e2e
 @pytest.mark.ui
-def test_user_registration_flow(page):
+def test_user_registration_flow(page) -> None:
+    """Verify that a new user can register successfully."""
     user = create_dummy_user()
 
     auth = (

@@ -1,11 +1,14 @@
 from datetime import UTC, datetime
 
 
-def unique_email():
-    timestamp  = datetime.now(UTC).strftime("%Y%m%d%H%M%S%f")
+def unique_email() -> str:
+    """Generate a unique email address for registration tests."""
+    timestamp = datetime.now(UTC).strftime("%Y%m%d%H%M%S%f")
     return f"test_{timestamp}@example.com"
 
-def create_dummy_user() -> dict:
+
+def create_dummy_user() -> dict[str, str]:
+    """Return test data for a newly registered user."""
     return {
         "name": "Mirko",
         "email": unique_email(),
@@ -20,9 +23,11 @@ def create_dummy_user() -> dict:
         "mobile_number": "123456789",
     }
 
-def pre_existing_dummy_user() -> dict:
+
+def pre_existing_dummy_user() -> dict[str, str]:
+    """Return credentials for an existing user account used in login tests."""
     return {
         "name": "Mirko",
         "email": "mirko@email.com",
-        "password": "Test123!"  # NOSONAR
+        "password": "Test123!",  # NOSONAR
     }

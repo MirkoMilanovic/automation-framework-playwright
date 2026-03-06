@@ -8,7 +8,8 @@ from utils.test_data import pre_existing_dummy_user
 
 @pytest.mark.e2e
 @pytest.mark.ui
-def test_login_and_logout(page):
+def test_login_and_logout(page) -> None:
+    """Verify that a user can log in and then log out successfully."""
     user = pre_existing_dummy_user()
 
     auth = (

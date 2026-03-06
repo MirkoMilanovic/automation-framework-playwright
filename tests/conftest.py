@@ -5,7 +5,7 @@ from fixtures.browser import browser, context, page, playwright_instance
 
 @pytest.fixture(autouse=True)
 def block_ads(page):
-
+    """Block common ad provider requests to improve test stability."""
     ad_patterns = [
         "**doubleclick.net/**",
         "**googlesyndication.com/**",

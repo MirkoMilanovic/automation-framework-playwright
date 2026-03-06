@@ -7,7 +7,8 @@ from utils.config import BASE_URL
 
 @pytest.mark.e2e
 @pytest.mark.ui
-def test_search_and_add_to_cart(page):
+def test_search_and_add_to_cart(page) -> None:
+    """Verify that a searched product can be added to the cart successfully."""
     search_item = "T-Shirt"
 
     products_page = (

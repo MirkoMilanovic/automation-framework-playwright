@@ -1,6 +1,6 @@
 import os
 
-BASE_URL = os.getenv("BASE_URL", "https://www.automationexercise.com")
-HEADLESS = os.getenv("HEADLESS", "true").lower() == "true"
-BROWSER = os.getenv("BROWSER", "chromium")
-TIMEOUT = int(os.getenv("TIMEOUT", "5000"))
+BASE_URL: str = os.getenv("BASE_URL", "https://www.automationexercise.com")
+HEADLESS: bool = os.getenv("HEADLESS", "true").lower() == "true"
+BROWSER: str = os.getenv("BROWSER", "chromium")
+TIMEOUT: int = int(os.getenv("TIMEOUT", "5000"))
