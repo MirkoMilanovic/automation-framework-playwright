@@ -4,7 +4,7 @@ from typing import Any, Generator
 import pytest
 from playwright.sync_api import Page
 
-from fixtures.browser import browser, context, page, playwright_instance
+from fixtures.browser import api_context, browser, context, page, playwright_instance
 
 
 @pytest.fixture(autouse=True)

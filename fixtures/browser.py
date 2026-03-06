@@ -2,6 +2,7 @@ from typing import Generator
 
 import pytest
 from playwright.sync_api import (
+    APIRequestContext,
     Browser,
     BrowserContext,
     Page,
@@ -9,7 +10,7 @@ from playwright.sync_api import (
     sync_playwright,
 )
 
-from utils.config import BROWSER, HEADLESS
+from utils.config import BASE_URL, BROWSER, HEADLESS
 
 
 @pytest.fixture(scope="session")
@@ -43,3 +44,11 @@ def page(context: BrowserContext) -> Generator[Page, None, None]:
     browser_page = context.new_page()
     yield browser_page
     browser_page.close()
+
+
+@pytest.fixture(scope="session")
+def api_context(playwright_instance) -> Generator[APIRequestContext, None, None]:
+    """Create and yield a Playwright API request context for API tests."""
+    context = playwright_instance.request.new_context(base_url=BASE_URL)
+    yield context
+    context.dispose()
