@@ -25,9 +25,9 @@ def test_user_registration_flow(page):
         .wait_until_loaded()
     )
 
-    expect(signup.field("name")).to_have_value(user["name"])
-    expect(signup.field("email")).to_have_value(user["email"])
-    expect(signup.field("email")).to_be_disabled()
+    expect(signup.data_qa("name")).to_have_value(user["name"])
+    expect(signup.data_qa("email")).to_have_value(user["email"])
+    expect(signup.data_qa("email")).to_be_disabled()
 
     account_created = (
         signup

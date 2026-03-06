@@ -11,22 +11,19 @@ class SignupPage(BasePage):
         self.create_account_button().wait_for(state="visible")
         return self
 
-    def field(self, data_qa):
-        return self.page.locator(f'[data-qa="{data_qa}"]')
-
     def fill_account_information(self, user):
-        self.field("password").fill(user["password"])
+        self.data_qa("password").fill(user["password"])
         return self
 
     def fill_address_information(self, user):
-        self.field("first_name").fill(user["first_name"])
-        self.field("last_name").fill(user["last_name"])
-        self.field("address").fill(user["address"])
-        self.field("country").select_option(user["country"])
-        self.field("state").fill(user["state"])
-        self.field("city").fill(user["city"])
-        self.field("zipcode").fill(user["zipcode"])
-        self.field("mobile_number").fill(user["mobile_number"])
+        self.data_qa("first_name").fill(user["first_name"])
+        self.data_qa("last_name").fill(user["last_name"])
+        self.data_qa("address").fill(user["address"])
+        self.data_qa("country").select_option(user["country"])
+        self.data_qa("state").fill(user["state"])
+        self.data_qa("city").fill(user["city"])
+        self.data_qa("zipcode").fill(user["zipcode"])
+        self.data_qa("mobile_number").fill(user["mobile_number"])
         return self
 
     def go_to_create_account(self):

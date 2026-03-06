@@ -19,3 +19,10 @@ def create_dummy_user() -> dict:
         "zipcode": "11000",
         "mobile_number": "123456789",
     }
+
+def pre_existing_dummy_user() -> dict:
+    return {
+        "name": "Mirko",
+        "email": "mirko@email.com",
+        "password": "Test123!"  # NOSONAR
+    }

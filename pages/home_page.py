@@ -20,7 +20,10 @@ class HomePage(BasePage):
         expected = BASE_URL.rstrip("/")
         return current == expected
 
-    def signup_login_link(self):
+    def logout_button(self):
+        return self.page.get_by_role("link", name="Logout")
+
+    def signup_login_button(self):
         return self.page.get_by_role("link", name="Signup / Login")
 
     def cart_link(self):
@@ -29,8 +32,11 @@ class HomePage(BasePage):
     def products_link(self):
         return self.page.get_by_role("link", name="Products")
 
+    def logged_user(self):
+        return self.page.get_by_text("Logged in as")
+
     def go_to_auth(self):
-        self.signup_login_link().click()
+        self.signup_login_button().click()
         return AuthPage(self.page)
 
     def go_to_products(self):
