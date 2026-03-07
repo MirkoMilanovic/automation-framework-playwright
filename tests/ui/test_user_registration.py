@@ -1,16 +1,25 @@
+import logging
+
 import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from utils.config import BASE_URL
+from utils.logger import configure_logger
 from utils.test_data import create_dummy_user
 
+configure_logger()
+logger = logging.getLogger(__name__)
 
 @pytest.mark.e2e
 @pytest.mark.ui
 def test_user_registration_flow(page) -> None:
     """Verify that a new user can register successfully."""
+    logger.info("Starting user registration flow")
+
     user = create_dummy_user()
+
+    logger.info(f"Registering user: {user['email']}")
 
     auth = (
         HomePage(page)
@@ -40,3 +49,5 @@ def test_user_registration_flow(page) -> None:
 
     expect(account_created.title()).to_be_visible()
     expect(account_created.page).to_have_url(f"{BASE_URL.rstrip('/')}/account_created")
+
+    logger.info("User registration flow completed successfully")

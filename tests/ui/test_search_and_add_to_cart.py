@@ -1,8 +1,14 @@
+import logging
+
 import pytest
 from playwright.sync_api import expect
 
 from pages.home_page import HomePage
 from utils.config import BASE_URL
+from utils.logger import configure_logger
+
+configure_logger()
+logger = logging.getLogger(__name__)
 
 
 @pytest.mark.e2e
@@ -10,6 +16,8 @@ from utils.config import BASE_URL
 def test_search_and_add_to_cart(page) -> None:
     """Verify that a searched product can be added to the cart successfully."""
     search_item = "T-Shirt"
+
+    logger.info(f"Searching for product: {search_item}")
 
     products_page = (
         HomePage(page)
@@ -22,12 +30,16 @@ def test_search_and_add_to_cart(page) -> None:
 
     product_names = products_page.get_product_names()
 
+    logger.info(f"Found {len(product_names)} search results")
+
     assert len(product_names) > 0, "Search returned no results"
 
     for name in product_names:
         assert search_item.lower() in name.lower(), f"Search result '{name}' does not match query '{search_item}'"
 
     first_product = products_page.get_first_product()
+
+    logger.info("Adding first product to cart")
 
     add_button = products_page.add_to_cart_button(first_product)
     expect(add_button).to_be_visible()
@@ -46,3 +58,5 @@ def test_search_and_add_to_cart(page) -> None:
     assert product_details == product_in_cart_details, \
         f"Cart product details {product_in_cart_details} do not match selected product {product_details}"
     assert cart_page.get_product_quantity(first_product_in_cart) == "1", "Product quantity in cart should be 1"
+
+    logger.info("Search and add to cart test completed successfully")
