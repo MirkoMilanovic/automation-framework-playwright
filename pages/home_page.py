@@ -1,3 +1,4 @@
+import logging
 from typing import Self
 
 from playwright.sync_api import Locator
@@ -7,6 +8,10 @@ from pages.base_page import BasePage
 from pages.cart_page import CartPage
 from pages.products_page import ProductsPage
 from utils.config import BASE_URL
+from utils.logger import configure_logger
+
+configure_logger()
+logger = logging.getLogger(__name__)
 
 
 class HomePage(BasePage):
@@ -15,14 +20,22 @@ class HomePage(BasePage):
     # Navigation
     def open(self) -> Self:
         """Open the home page."""
-        self.navigate(BASE_URL)
-        return self
+        try:
+            self.navigate(BASE_URL)
+            return self
+        except Exception as e:
+            logger.error(msg := "Failed to open home page")
+            raise RuntimeError(msg) from e
 
     def wait_until_loaded(self) -> Self:
         """Wait until the home page is fully loaded."""
-        self.page.wait_for_url(f"{BASE_URL.rstrip('/')}/")
-        self.features_items_title().wait_for(state="visible")
-        return self
+        try:
+            self.page.wait_for_url(f"{BASE_URL.rstrip('/')}/")
+            self.features_items_title().wait_for(state="visible")
+            return self
+        except Exception as e:
+            logger.error(msg := "Failed to load home page")
+            raise RuntimeError(msg) from e
 
     def is_loaded(self) -> bool:
         """Check whether the current URL matches the expected home page URL."""
@@ -59,15 +72,27 @@ class HomePage(BasePage):
     # Page transitions
     def go_to_auth(self) -> AuthPage:
         """Navigate to the authentication page."""
-        self.signup_login_button().click()
-        return AuthPage(self.page)
+        try:
+            self.signup_login_button().click()
+            return AuthPage(self.page)
+        except Exception as e:
+            logger.error(msg := "Failed to navigate from home page to auth page")
+            raise RuntimeError(msg) from e
 
     def go_to_products(self) -> ProductsPage:
         """Navigate to the products page."""
-        self.products_link().first.click()
-        return ProductsPage(self.page)
+        try:
+            self.products_link().first.click()
+            return ProductsPage(self.page)
+        except Exception as e:
+            logger.error(msg := "Failed to navigate from home page to products page")
+            raise RuntimeError(msg) from e
 
     def go_to_cart(self) -> CartPage:
         """Navigate to the cart page."""
-        self.cart_link().click()
-        return CartPage(self.page)
+        try:
+            self.cart_link().click()
+            return CartPage(self.page)
+        except Exception as e:
+            logger.error(msg := "Failed to navigate from home page to cart page")
+            raise RuntimeError(msg) from e
